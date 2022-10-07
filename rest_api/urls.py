@@ -10,4 +10,6 @@ urlpatterns = [
     path('create/', malumotjoylash),
     path('create/<int:pk>/', malumotUpdate),
     path('delete/<int:pk>/', malumotDelete),
+    path('search/', krosovkaSearch),
+    path('filter-bazm/',filterKrosovka )
 ]

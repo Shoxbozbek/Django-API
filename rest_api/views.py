@@ -6,6 +6,8 @@ from .serializer import KrosovkaAPI
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import permissions
+from rest_framework import generics
+from rest_framework import filters
 
 def home(request):
     return render(request, 'home.html')
@@ -57,3 +59,23 @@ def malumotDelete(request, pk):
     krosovka.delete()
         
     return Response("Muvaffaqiyatli o'chirildi")
+
+# CRUD Create, Read(GET), Update, Delete
+
+# Rest API filter
+@api_view(["GET"])
+@permission_classes((permissions.AllowAny, ))
+def filterKrosovka(request):
+    filter = Krosovka.objects.filter(turi='BAZM')
+    serializer = KrosovkaAPI(filter, many=True)
+    return Response(serializer.data)
+
+# Search API
+
+class KrosovkaSearchAPI(generics.ListAPIView):
+    queryset = Krosovka.objects.all()
+    serializer_class = KrosovkaAPI
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['brand', 'color', 'size', 'price']
+    
+krosovkaSearch = KrosovkaSearchAPI.as_view()
