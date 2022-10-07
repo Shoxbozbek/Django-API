@@ -9,5 +9,5 @@ urlpatterns = [
     path('krosovka-api/<int:pk>/', singleAPI),
     path('create/', malumotjoylash),
     path('create/<int:pk>/', malumotUpdate),
-    path('delete/', malumotDelete),
+    path('delete/<int:pk>/', malumotDelete),
 ]
